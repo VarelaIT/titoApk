@@ -1,9 +1,8 @@
 import { StyleSheet, TextInput, Text, View, Button } from "react-native";
 import Measurements from "../logic/measurements";
-import { useState, SetStateAction, Dispatch } from "react";
+import { useState } from "react";
 
 interface Props {
-  measures: Measurements;
   setMeasures: (args0: Measurements) => void;
 }
 
