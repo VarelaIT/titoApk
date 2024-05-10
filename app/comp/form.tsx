@@ -1,21 +1,69 @@
 import { StyleSheet, TextInput, Text, View, Button } from "react-native";
+import Measurements from "../logic/measurements";
+import { useState, SetStateAction, Dispatch } from "react";
 
-export default function Form() {
+interface Props {
+  measures: Measurements;
+  setMeasures: (args0: Measurements) => void;
+}
+
+export default function Form(props: Props) {
+  const [base, setBase] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [panels, setPanels] = useState(2);
+
+  function calculate() {
+    props.setMeasures(new Measurements(base, height, panels));
+  }
+
+  function handdleBase(value: string) {
+    const numericValue = parseFloat(value);
+    if (Number.isNaN(numericValue)) setBase(0);
+    else setBase(numericValue);
+  }
+
+  function handdleHeight(value: string) {
+    const numericValue = parseFloat(value);
+    if (Number.isNaN(numericValue)) setHeight(0);
+    else setHeight(numericValue);
+  }
+
+  function handdlePanels(value: string) {
+    const numericValue = parseFloat(value);
+    if (Number.isNaN(numericValue)) setPanels(0);
+    else setPanels(numericValue);
+  }
+
   return (
     <View style={styles.formContainer}>
       <View style={styles.formItem}>
         <Text>Base</Text>
-        <TextInput style={styles.inputItem} keyboardType="numeric" />
+        <TextInput
+          style={styles.inputItem}
+          keyboardType="numeric"
+          value={`${base}`}
+          onChangeText={handdleBase}
+        />
       </View>
       <View style={styles.formItem}>
         <Text>Altura</Text>
-        <TextInput style={styles.inputItem} keyboardType="numeric" />
+        <TextInput
+          style={styles.inputItem}
+          keyboardType="numeric"
+          value={`${height}`}
+          onChangeText={handdleHeight}
+        />
       </View>
       <View style={styles.formItem}>
         <Text>Paneles</Text>
-        <TextInput style={styles.inputItem} keyboardType="numeric" />
+        <TextInput
+          style={styles.inputItem}
+          keyboardType="numeric"
+          value={`${panels}`}
+          onChangeText={handdlePanels}
+        />
       </View>
-      <Button title="Calcular" />
+      <Button onPress={calculate} title="Calcular" />
     </View>
   );
 }
